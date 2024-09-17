@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 const ImageResizer = () => {
@@ -8,6 +8,30 @@ const ImageResizer = () => {
     const [percentage, setPercentage] = useState('');
     const [quality, setQuality] = useState(80);
     const [resizedImage, setResizedImage] = useState(null);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+    useEffect(() => {
+        const title = document.querySelector('.title');
+        let text = title.textContent;
+        title.textContent = '';
+        let i = 0;
+        const interval = setInterval(() => {
+            if (i < text.length) {
+                title.textContent += text.charAt(i);
+                i++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 100);
+    }, []);
+
+    useEffect(() => {
+        if ((width && height) || percentage) {
+            setIsButtonDisabled(false);
+        } else {
+            setIsButtonDisabled(true);
+        }
+    }, [width, height, percentage]);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -127,14 +151,12 @@ const ImageResizer = () => {
                             <span id="quality-value">{quality}</span>
                         </div>
 
-                        {image && (
-                            <div id="thumbnail-preview">
-                                <img src={image} alt="Thumbnail" />
-                                <button id="remove-thumbnail" className="close-button" onClick={() => setImage(null)}>×</button>
-                            </div>
-                        )}
+                        <div id="thumbnail-preview">
+                            <img src={image} alt="Thumbnail" />
+                            <button id="remove-thumbnail" className="close-button" onClick={() => setImage(null)}>×</button>
+                        </div>
 
-                        <button id="resizeButton" onClick={handleResizeAndCompress}>
+                        <button id="resizeButton" onClick={handleResizeAndCompress} disabled={isButtonDisabled}>
                             Boyutlandır
                         </button>
                     </div>
