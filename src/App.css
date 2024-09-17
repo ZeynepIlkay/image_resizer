@@ -1,0 +1,218 @@
+.container {
+    text-align: center;
+    margin-top: 50px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    border: 1px solid #d52727;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.title {
+    margin-bottom: 20px;
+}
+
+.image-upload {
+    margin-bottom: 20px;
+}
+
+.upload-label {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: 2px solid #ff3700;
+    border-radius: 5px;
+    display: inline-block;
+    color: #ff3700;
+    font-weight: bold;
+}
+
+#action-form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Sola yaslı */
+}
+
+.control-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 3%;
+}
+
+.control-group label {
+    flex: 1;
+    text-align: left; /* Sola yaslı */
+}
+
+.control-group input {
+    flex: 2;
+    text-align: right; /* Sağa yaslı */
+}
+
+label {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+input[type="number"] {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    text-align: right;
+}
+
+.quality-group input[type="range"] {
+    width: 150px;
+}
+
+#thumbnail-preview {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-left: 20px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#thumbnail-preview img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#remove-thumbnail {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(255, 0, 0, 0.7);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+#resizeButton {
+    padding: 10px 20px;
+    background-color: rgba(255, 0, 0, 0.7);
+    border: none;
+    
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Sola yaslı */
+    }
+    
+    .controls {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Sola yaslı */
+    }
+    
+    .control-group {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .control-group label {
+        flex: 1;
+        text-align: left; /* Sola yaslı */
+    }
+    
+    .control-group input {
+        flex: 2;
+        text-align: right; /* Sağa yaslı */
+        border: 1px solid #d52727;
+    }
+    
+    #thumbnail-preview {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    #resizeButton {
+        align-self: flex-end; /* Sağda */
+    }
+    
+    
+    
+    
+    
+    #result-card {
+        position: relative;
+    }
+    
+    #close-result {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#resizeButton:hover {
+    background-color: #d52727;
+}
+
+.close-button {
+    color: white;
+    font-size: 1.5rem;
+    border: rgba(255, 0, 0, 0.7);
+    border-radius: 5px;
+    background: rgba(255, 0, 0, 0.7);
+    
+}
+
+
+.result-card {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.result-card.active {
+    display: block;
+}
+
+#preview {
+    max-width: 100%;
+    height: auto;
+}
+
+#downloadButton {
+    display: block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: rgba(255, 0, 0, 0.7);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+#downloadButton:hover {
+    background-color: #d52727;
+}
+

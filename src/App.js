@@ -1,8 +1,4 @@
-// Imageresizer.js
-
-import React, {
-    useState
-} from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 const ImageResizer = () => {
@@ -11,6 +7,7 @@ const ImageResizer = () => {
     const [height, setHeight] = useState('');
     const [percentage, setPercentage] = useState('');
     const [quality, setQuality] = useState(80);
+    const [resizedImage, setResizedImage] = useState(null);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -18,6 +15,7 @@ const ImageResizer = () => {
             const reader = new FileReader();
             reader.onload = () => {
                 setImage(reader.result);
+                setResizedImage(null);
             };
             reader.readAsDataURL(file);
         }
@@ -35,10 +33,8 @@ const ImageResizer = () => {
                 targetWidth = parseInt(width, 10);
                 targetHeight = parseInt(height, 10);
             } else if (percentage) {
-                targetWidth = (parseInt(
-                    percentage, 10) * img.width) / 100;
-                targetHeight = (parseInt(
-                    percentage, 10) * img.height) / 100;
+                targetWidth = (parseInt(percentage, 10) * img.width) / 100;
+                targetHeight = (parseInt(percentage, 10) * img.height) / 100;
             } else {
                 targetWidth = img.width;
                 targetHeight = img.height;
@@ -49,16 +45,16 @@ const ImageResizer = () => {
 
             ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
 
-            const compressedDataUrl = canvas.toDataURL(
-                'image/jpeg', quality / 100);
-            setImage(compressedDataUrl);
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', quality / 100);
+            setResizedImage(compressedDataUrl);
         };
+
         img.src = image;
     };
 
     const handleDownload = () => {
         const link = document.createElement('a');
-        link.href = image;
+        link.href = resizedImage;
         link.download = 'compressed_image.jpg';
         document.body.appendChild(link);
         link.click();
@@ -67,29 +63,27 @@ const ImageResizer = () => {
 
     return (
         <div className="container">
-            <h1 className="title">
-                Görüntüyü yeniden boyutlandır
-            </h1>
+            <h1 className="title">Görüntüyü yeniden boyutlandır</h1>
 
             <div className="image-upload">
-                <label htmlFor="imageInput"
-                    className="upload-label">
-                    <i className="fas fa-cloud-upload-alt"></i>
-                    Görüntüyü yükle  : 
+                <label htmlFor="imageInput" className="upload-label">
+                    <i className="fas fa-cloud-upload-alt"></i> Görüntüyü yükle
                 </label>
                 <input
                     type="file"
                     id="imageInput"
                     accept="image/*"
-                    onChange={handleImageChange}
+                    onChange={(e) => {
+                        console.log("Dosya seçildi");
+                        handleImageChange(e);
+                    }}
+                    style={{ display: 'none' }}
                 />
             </div>
 
             {image && (
-                <div id="action-form">
-                    <div className="output">
-                        <h2 className="preview-label">Görüntü:</h2>
-                        <div className="controls">
+                <div id="action-form" className="left-aligned">
+                    <div className="controls">
                         <div className="control-group">
                             <label htmlFor="resizeWidth">En:</label>
                             <input
@@ -101,19 +95,17 @@ const ImageResizer = () => {
                             />
                         </div>
                         <div className="control-group">
-                            <label htmlFor="resizeHeight">Boy giriniz:</label>
+                            <label htmlFor="resizeHeight">Boy:</label>
                             <input
                                 type="number"
                                 id="resizeHeight"
-                                placeholder="Boy"
+                                placeholder="Boy giriniz"
                                 value={height}
                                 onChange={(e) => setHeight(e.target.value)}
                             />
                         </div>
                         <div className="control-group">
-                            <label htmlFor="resizePercentage">
-                                Yüzde ile boyutlandır:
-                            </label>
+                            <label htmlFor="resizePercentage">Yüzde ile boyutlandır:</label>
                             <input
                                 type="number"
                                 id="resizePercentage"
@@ -132,34 +124,30 @@ const ImageResizer = () => {
                                 value={quality}
                                 onChange={(e) => setQuality(e.target.value)}
                             />
-                            <span id="quality-value" className="quality-value">
-                                {quality}
-                            </span>
+                            <span id="quality-value">{quality}</span>
                         </div>
-                        <button id="resizeButton"
-                            onClick={handleResizeAndCompress}>
+
+                        {image && (
+                            <div id="thumbnail-preview">
+                                <img src={image} alt="Thumbnail" />
+                                <button id="remove-thumbnail" className="close-button" onClick={() => setImage(null)}>×</button>
+                            </div>
+                        )}
+
+                        <button id="resizeButton" onClick={handleResizeAndCompress}>
                             Boyutlandır
                         </button>
-                        <img id="preview" src={image} alt="Preview" />
-                        <p id="image-dimensions" style={{
-                            marginTop: '10px'
-                        }}>
-                        </p>
                     </div>
+                </div>
+            )}
 
-                    
-                        {image && (
-                            <a
-                                id="downloadButton"
-                                className="download-button"
-                                href={image}
-                                download="compressed_image.jpg"
-                                onClick={handleDownload}
-                            >
-                                İndir
-                            </a>
-                        )}
-                    </div>
+            {resizedImage && (
+                <div id="result-card" className="result-card active">
+                    <button id="close-result" className="close-button" onClick={() => setResizedImage(null)}>×</button>
+                    <img id="preview" src={resizedImage} alt="Preview" />
+                    <a id="downloadButton" href={resizedImage} download="compressed_image.jpg" onClick={handleDownload}>
+                        İndir
+                    </a>
                 </div>
             )}
         </div>
@@ -167,4 +155,3 @@ const ImageResizer = () => {
 };
 
 export default ImageResizer;
-
