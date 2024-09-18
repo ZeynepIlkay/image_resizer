@@ -91,14 +91,7 @@ const ImageResizer = () => {
         img.src = image;
     };
 
-    const handleDownload = () => {
-        const link = document.createElement('a');
-        link.href = resizedImage;
-        link.download = 'compressed_image.jpg';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
+
 
     return (
         <div className="container">
@@ -182,9 +175,10 @@ const ImageResizer = () => {
                 <div id="result-card" className="result-card active">
                     <button id="close-result" className="close-button" onClick={() => setResizedImage(null)}>×</button>
                     <img id="preview" src={resizedImage} alt="Preview" />
-                    <a id="downloadButton" href={resizedImage} download="compressed_image.jpg" onClick={handleDownload}>
+                    <a id="downloadButton" href={resizedImage} download="compressed_image.jpg">
                         İndir
                     </a>
+
                 </div>
             )}
         </div>

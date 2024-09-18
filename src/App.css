@@ -146,6 +146,9 @@ input[type="number"] {
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    max-width: 100%; /* Sayfa genişliğini aşmaması için */
+    max-height: 80vh; /* Yüksekliğini viewport'un %80'i ile sınırla */
+    overflow: auto; /* Taşma olduğunda scrollbar ekle */
 }
 
 .result-card.active {
@@ -153,7 +156,8 @@ input[type="number"] {
 }
 
 #preview {
-    max-width: 100%;
+    max-width: 100%; /* Görüntüyü yatayda sınırlamak için */
+    max-height: 100%; /* Görüntüyü dikeyde sınırlamak için */
     height: auto;
 }
 
