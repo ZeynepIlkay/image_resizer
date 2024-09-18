@@ -17,7 +17,7 @@ Bu proje, kullanıcıların görüntüleri yeniden boyutlandırmasına ve sıkı
 ## Kurulum
 
 1. Bu repoyu klonlayın:
-   git clone https://github.com/kullanıcı-adınız/image-resizer-compressor.git
+   git clone <repo url>
    cd image-resizer-compressor
    
 2. Gerekli bağımlılıkları yükleyin:
