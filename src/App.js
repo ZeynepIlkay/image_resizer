@@ -9,6 +9,13 @@ const ImageResizer = () => {
     const [quality, setQuality] = useState(80);
     const [resizedImage, setResizedImage] = useState(null);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    // Error message state
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const MAX_WIDTH = 4000;
+    const MAX_HEIGHT = 4000;
+    const MAX_PERCENTAGE = 1000;
+
 
     useEffect(() => {
         const title = document.querySelector('.title');
@@ -55,12 +62,19 @@ const ImageResizer = () => {
             reader.onload = () => {
                 setImage(reader.result);
                 setResizedImage(null);
+                setErrorMessage(''); // Hata mesajını sıfırla
             };
             reader.readAsDataURL(file);
         }
     };
 
     const handleResizeAndCompress = () => {
+
+        if (width > MAX_WIDTH || height > MAX_HEIGHT || percentage > MAX_PERCENTAGE) {
+            setErrorMessage(`Maksimum ölçüler ${MAX_WIDTH}px genişlik ve ${MAX_HEIGHT}px yüksekliği geçmemelidir! Yüzde olarak 1000'i aşmayınız!`);
+            return;
+        }
+
         const img = document.createElement('img');
         img.onload = () => {
             const canvas = document.createElement('canvas');
@@ -86,6 +100,7 @@ const ImageResizer = () => {
 
             const compressedDataUrl = canvas.toDataURL('image/jpeg', quality / 100);
             setResizedImage(compressedDataUrl);
+            setErrorMessage(''); // Eğer hata yoksa mesajı temizler
         };
 
         img.src = image;
@@ -158,6 +173,7 @@ const ImageResizer = () => {
                             />
                             <span id="quality-value">{quality}</span>
                         </div>
+                        {errorMessage && <p className="error-message">{errorMessage}</p>}
 
                         <div id="thumbnail-preview">
                             <img src={image} alt="Thumbnail" />
@@ -167,6 +183,7 @@ const ImageResizer = () => {
                         <button id="resizeButton" onClick={handleResizeAndCompress} disabled={isButtonDisabled}>
                             Boyutlandır
                         </button>
+                        
                     </div>
                 </div>
             )}

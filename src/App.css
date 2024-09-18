@@ -318,3 +318,10 @@ input[type="range"]::-moz-range-thumb {
     cursor: pointer;
     border-radius: 50%;
 }
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
