@@ -25,6 +25,21 @@ const ImageResizer = () => {
         }, 100);
     }, []);
 
+    // Bu useEffect, width ve height değerleri girildiğinde percentage'ı sıfırlar.
+    useEffect(() => {
+        if (width || height) {
+            setPercentage('');
+        }
+    }, [width, height]);
+
+    // Bu useEffect, percentage girildiğinde width ve height'ı sıfırlar.
+    useEffect(() => {
+        if (percentage) {
+            setWidth('');
+            setHeight('');
+        }
+    }, [percentage]);
+
     useEffect(() => {
         if ((width && height) || percentage) {
             setIsButtonDisabled(false);
